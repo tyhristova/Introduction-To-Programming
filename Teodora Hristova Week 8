@@ -1,0 +1,164 @@
+#include <iostream>
+
+// 1
+int nBitsFromM(int x, int m, int n)
+{
+    int mask = (1 << (m + 1)) - 1;
+    return (x & mask) >> (m - n + 1);
+}
+
+// 2
+int countOfOnes(int number)
+{
+    int mask = 1;
+    int counter = 0;
+
+    while(number)
+    {
+        if(number & mask)
+        {
+            counter++;
+        }
+        number >>= 1;
+    }
+
+    return counter;
+}
+
+// 3
+int getLastKBits(int number, int k)
+{
+    int mask = (1 << k) - 1;
+    return (number & mask);
+}
+
+// 4
+void swapBits(int& a, int& b)
+{
+//     a = a + b;
+//     b = a - b;
+//     a = a - b;
+//     a ^ b ^ b = a;
+
+    a ^= b;
+    b = a ^ b;
+    a ^= b;
+}
+
+// 5
+void changeBit(int& n, int p, int b)
+{
+    int mask = 1 << p;
+    if(((n >> p) & 1) != b)
+    {
+        n ^= mask;
+    }
+}
+
+// 6
+bool areBitsPermutation(int a, int b)
+{
+    int onesOfA = countOfOnes(a);
+    int onesOfB = countOfOnes(b);
+
+    return onesOfA == onesOfB;
+}
+
+// Bonus 1
+void readArray(int* arr, size_t length)
+{
+    for(size_t i = 0; i < length; i++)
+    {
+        std::cin >> arr[i];
+    }
+}
+
+int getSingleNum(int* arr, size_t length)
+{
+    int result = 0;
+
+    for(int i = 0; i < length; i++)
+    {
+        result ^= arr[i];
+    }
+
+    return result;
+}
+
+// Bonus 2
+void printSubsets(int* arr, size_t count)
+{
+	size_t subsetsCount = (1 << count);
+	for (size_t i = 0; i < subsetsCount; i++)
+	{
+		size_t currentSubset = i;
+		std::cout << "{";
+		size_t iterator = 0;
+		while (currentSubset)
+		{
+			bool isInSubset = currentSubset & 1;
+			if (isInSubset)
+			{
+				std::cout << " " << arr[iterator];
+			}
+
+			iterator++;
+
+			currentSubset = (currentSubset >> 1);
+		}
+		std::cout << " }" << std::endl;
+	}
+}
+
+int main()
+{
+    // 1
+    // int x, m, n;
+    // std::cin >> x >> m >> n;
+    // std::cout << nBitsFromM(x, m, n);
+
+    // 2
+    // int x;
+    // std::cin >> x;
+    // std::cout << countOfOnes(x);
+
+    // 3
+    // int x, k;
+    // std::cin >> x >> k;
+    // std::cout << getLastKBits(x, k);
+
+    // 4
+    // int x, k;
+    // std::cin >> x >> k;
+    // swapBits(x, k);
+    // std::cout << x << " " << k << std::endl;
+
+    // 5
+    // int n, p, b;
+    // std::cin >> n >> p >> b;
+    // changeBit(n, p, b);
+    // std::cout << n << std::endl;
+
+    // 6
+    // int a, b;
+    // std::cin >> a >> b;
+    // std::cout << areBitsPermutation(a, b);
+
+    // Bonus 1
+    // const size_t ARRAY_SIZE = 10;
+    // int arr[ARRAY_SIZE];
+    // size_t length = 0;
+    // std::cin >> length;
+    // readArray(arr, length);
+    // std::cout << getSingleNum(arr, length);
+
+    // Bonus 2
+    // const size_t ARRAY_SIZE = 10;
+    // int arr[ARRAY_SIZE];
+    // size_t length = 0;
+    // std::cin >> length;
+    // readArray(arr, length);
+    // printSubsets(arr, length);
+
+    return 0;
+}
