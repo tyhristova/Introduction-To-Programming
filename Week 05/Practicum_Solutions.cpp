@@ -1,204 +1,260 @@
 #include <iostream>
 
+int reverse(int n)
+{
+    int reversedN = 0;
 
-//1
-void swap(int& first, int& second) {
-	int temp = first;
-	first = second;
-	second = temp;
+     while(n != 0){
+        int digit = n % 10;
+        reversedN = reversedN * 10 + digit;
+        n /= 10;
+     }
+
+     return reversedN;
 }
 
-void swap(double& first, double& second) {
-	double temp = first;
-	first = second;
-	second = temp;
+int digitsCounter(int n)
+{
+    int counter = 0;
+
+    while(n > 0)
+    {
+        n /= 10;
+        counter++;
+    }
+
+    return counter;
+}
+
+// 1
+void swap(int& a, int& b) 
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void swap(double& a, double& b) 
+{
+    double temp = a;
+    a = b;
+    b = temp;
+}
+
+// 7
+int gcd(int first, int second)
+{
+    if (!(first > second)) {
+        swap(first, second);
+    }
+  
+    for (int i = second; i >= 1; --i) {
+        if (first % i == 0 && second % i == 0) {
+             return i;
+         }      
+    }
+    return 1;
+}
+
+int gcdEucledianAlgorithm(int a, int b)
+{
+    int r = 0;
+
+    while (b != 0)
+    {
+        r = a % b;
+        a = b;
+        b = r;
+    }
+
+    return a;
+}
+
+// 2
+void fraction(int& nominator, int& denominator) 
+{
+    int gcdInput = gcd(nominator, denominator);
+
+    nominator /= gcdInput;
+    denominator /= gcdInput;
+}
+
+// 3
+int removeDigitAtIndex(int n, int k)
+{
+    int counter = digitsCounter(n);
+
+    if(k > 0 && k <= counter)
+    {
+        int divider1 = 1;
+        int divider2 = 1;
+        
+        for(int i = 1; i < k; i++)
+        {
+            divider1 *= 10;
+        }
+
+        for(int i = 1; i <= k; i++)
+        {
+            divider2 *= 10;
+        }
+
+        int remainder = n % divider1;
+        n /= divider2;
+
+        return n * divider1 + remainder;
+    }
+    
+    return 0;
+}
+
+// 4
+void splitEvenOddPositions(int n)
+{
+    int oddPosition = 0;
+    int evenPosition = 0;
+    int counter = digitsCounter(n);
+
+    int divider1 = 1;
+    int divider2 = 1;
+
+    while(n != 0)
+    {
+        if(counter % 2 == 1)
+        {
+            int remainderOdd = n % 10;
+            n /= 10;
+            oddPosition += remainderOdd * divider1;
+            divider1 *= 10;
+            counter--;
+        }
+        else if(counter % 2 == 0)
+        {
+            int remainderEven = n % 10;
+            n /= 10;
+            evenPosition += remainderEven * divider2;
+            divider2 *= 10;
+            counter--;
+        }
+    }
+
+    std::cout << oddPosition << " " << evenPosition << std::endl;
+    
+}
+
+// 5
+int getPartialNumber(int n, int i, int j)
+{
+    int counter = digitsCounter(n);
+
+    int divider1 = 1;
+
+    if(i > 0 && i < counter && j > 0 && j < counter && i <= j)
+    {
+        for(int p = 0; p < counter; p++)
+        {
+        divider1 *= 10;
+        }
+
+        int s = 0;
+        while(s < i)
+        {
+            n %= divider1;
+            divider1 /= 10;
+            s++;
+        }
+
+        int t = j;
+        while(t < counter)
+        {
+            n /= 10;
+            t++;
+        }
+
+    }
+
+    return n;
+}
+
+// 6
+
+int powerOfTen(int exp) {
+    int result = 1;
+    for (int i = 0; i < exp; i++) {
+        result *= 10;
+    }
+    return result;
+}
+
+void changeDigits(int n, int m, int k)
+{
+    int nOriginal = n;
+    int mOriginal = m;
+    int counter = digitsCounter(n);
+
+    for(int i = k; i < counter; i++)
+    {
+        n /= 10;
+    }
+    
+    int nIndex = n % 10;
+
+
+    for(int j = k; j < counter; j++)
+    {
+        m /= 10;
+    }
+
+    int mIndex = m % 10;
+
+    int nNew = 0;
+    int mNew = 0;
+    int power = counter - k;
+
+    nNew = (n / 10) * powerOfTen(power + 1) + mIndex * powerOfTen(power) + nOriginal % powerOfTen(power);
+    mNew = (m / 10) * powerOfTen(power + 1) + nIndex * powerOfTen(power) + mOriginal % powerOfTen(power);
+
+    std::cout << nNew << " " << mNew;
 }
 
 
-void swap(char& first, char& second) {
-	char temp = first;
-	first = second;
-	second = temp;
+
+// 8
+int lcm(int first, int second)
+{
+    int result = first;
+
+    for(int i = 1; result % second != 0; i++)
+    {
+        result = first * i;
+    }
+
+    return result;
 }
 
-void swap(unsigned& first, unsigned& second) {
-	unsigned temp = first;
-	first = second;
-	second = temp;
+// 9
+int concat(unsigned int first, unsigned int second)
+{
+    int counterSecond = digitsCounter(second);
+    int result = first * powerOfTen(counterSecond) + second;
+
+    return result;
 }
 
+int main()
+{   
+    // int i = 0;
+    // while(++i, ++i < 15){
+    //     do
+    //     {
+    //         std::cout << i * 2;
+    //     }
+    //     while(i++ < 6);
+    // }
 
+    int a, b;
+    std::cin >> a >> b;
+    std::cout << gcdEucledianAlgorithm(a, b);
 
-//7
-int gcd(unsigned first, unsigned second) {
-
-	if (first < second) { // we want the larger number to be first and the smaller - second
-		swap(first, second);
-	}
-
-	unsigned rest = first;//search euclidian algorithm
-
-	while (rest) {
-		rest = first % second;
-		first = second;
-		second = rest;
-	}
-
-	return first;
-}
-
-//2
-void simplify(unsigned& nominator, unsigned& denominator) {
-
-	int commonDivisor = gcd(nominator, denominator);
-	nominator /= commonDivisor;
-	denominator /= commonDivisor;
-}
-
-
-unsigned reverse(unsigned num) {
-	int res = 0;
-	while (num) {
-		res *= 10;
-		res += (num % 10);
-		num /= 10;
-	}
-
-	return res;
-}
-
-unsigned countDigits(unsigned num) {
-	if (num == 0)
-		return 1;
-
-	int res = 0;
-
-	while (num) {
-		num /= 10;
-		res++;
-	}
-
-	return res;
-}
-
-unsigned pow(unsigned base, unsigned exponent) {
-	if (base == 0)
-		return 0;
-	unsigned res = 1;
-
-	for (size_t i = 0; i < exponent; i++)
-	{
-		res *= base;
-	}
-	return res;
-}
-
-//9 
-unsigned concat(unsigned  first, unsigned  second) {
-	int secondDigitsCount = countDigits(second);
-
-	return first * pow(10, secondDigitsCount) + second;
-}
-
-//3
-unsigned removeKthDigit(unsigned num, unsigned short k) {
-	unsigned short powerOf10 = 1;
-	unsigned rightSideOfNum = 0;
-
-	for (unsigned short i = 0; i < k - 1; i++) //take the last k - 1 digits
-	{
-		rightSideOfNum *= 10;
-		rightSideOfNum += (num % 10);
-		num /= 10;
-	}
-	num /= 10; // remove the kth digit
-
-	rightSideOfNum = reverse(rightSideOfNum);
-
-
-	return concat(num, rightSideOfNum);
-	//if the indexation is for front to back 
-	//reverse the number at the start and reverse it again at the end
-
-}
-//4
-void split(unsigned num, unsigned& even, unsigned& odd) {
-
-	even = odd = 0;
-	unsigned short counter = 1;
-
-	while (num) {
-		if (counter % 2 == 0) { //evens
-			even *= 10;
-			even += (num % 10);
-		}
-		else { //odds
-			odd *= 10;
-			odd += (num % 10);
-		}
-
-		num /= 10;
-		counter++;
-	}
-
-	even = reverse(even);
-	odd = reverse(odd);
-
-}
-
-//5 
-unsigned trim(unsigned num, unsigned i, unsigned j) {
-	unsigned digitsCount = countDigits(num);
-	unsigned digitsToTrimFront = i - 1;
-	unsigned digitsToTrimBack = digitsCount - j;
-
-	for (size_t i = 0; i < digitsToTrimBack; i++) //trim back
-		num /= 10;
-
-	num = reverse(num);
-
-	for (size_t i = 0; i < digitsToTrimFront; i++) //trim front
-		num /= 10;
-
-
-	return reverse(num);
-
-}
-
-//6
-
-void changeDigits(unsigned& n, unsigned& m, unsigned k) {
-	n = reverse(n);
-	m = reverse(m);
-	unsigned leftEndN = 0;
-	unsigned leftEndM = 0;
-
-	for (size_t i = 0; i < k - 1; n /= 10, m /= 10, i++)
-	{
-		leftEndN *= 10;
-		leftEndN += (n % 10);
-		leftEndM *= 10;
-		leftEndM += (m % 10);
-	}
-
-	unsigned digitN = (n % 10);
-	unsigned digitM = (m % 10);
-
-	n -= digitN;
-	n += digitM;
-	m -= digitM;
-	m += digitN;
-	n = concat(leftEndN, reverse(n));
-	m = concat(leftEndM, reverse(m));
-
-}
-
-//8 
-unsigned lcm(unsigned first, unsigned second) {
-
-	return (first * second) / gcd(first, second);
-}
-
-
-int main() {
+    return 0;
 }
