@@ -1,6 +1,19 @@
 #include <iostream>
 
-int DigitsCounter(int n)
+int reverse(int n)
+{
+    int reversedN = 0;
+
+     while(n != 0){
+        int digit = n % 10;
+        reversedN = reversedN * 10 + digit;
+        n /= 10;
+     }
+
+     return reversedN;
+}
+
+int digitsCounter(int n)
 {
     int counter = 0;
 
@@ -14,14 +27,14 @@ int DigitsCounter(int n)
 }
 
 // 1
-void Swap(int& a, int& b) 
+void swap(int& a, int& b) 
 {
     int temp = a;
     a = b;
     b = temp;
 }
 
-void Swap(double& a, double& b) 
+void swap(double& a, double& b) 
 {
     double temp = a;
     a = b;
@@ -29,10 +42,10 @@ void Swap(double& a, double& b)
 }
 
 // 7
-int Gcd(int first, int second)
+int gcd(int first, int second)
 {
     if (!(first > second)) {
-        Swap(first, second);
+        swap(first, second);
     }
   
     for (int i = second; i >= 1; --i) {
@@ -41,23 +54,35 @@ int Gcd(int first, int second)
          }      
     }
     return 1;
-    
+}
 
+int gcdEucledianAlgorithm(int a, int b)
+{
+    int r = 0;
+
+    while (b != 0)
+    {
+        r = a % b;
+        a = b;
+        b = r;
+    }
+
+    return a;
 }
 
 // 2
 void fraction(int& nominator, int& denominator) 
 {
-    int gcdInput = Gcd(nominator, denominator);
+    int gcdInput = gcd(nominator, denominator);
 
     nominator /= gcdInput;
     denominator /= gcdInput;
 }
 
 // 3
-int RemoveDigitAtIndex(int n, int k)
+int removeDigitAtIndex(int n, int k)
 {
-    int counter = DigitsCounter(n);
+    int counter = digitsCounter(n);
 
     if(k > 0 && k <= counter)
     {
@@ -84,11 +109,11 @@ int RemoveDigitAtIndex(int n, int k)
 }
 
 // 4
-void SplitEvenOddPositions(int n)
+void splitEvenOddPositions(int n)
 {
     int oddPosition = 0;
     int evenPosition = 0;
-    int counter = DigitsCounter(n);
+    int counter = digitsCounter(n);
 
     int divider1 = 1;
     int divider2 = 1;
@@ -118,9 +143,9 @@ void SplitEvenOddPositions(int n)
 }
 
 // 5
-int GetPartialNumber(int n, int i, int j)
+int getPartialNumber(int n, int i, int j)
 {
-    int counter = DigitsCounter(n);
+    int counter = digitsCounter(n);
 
     int divider1 = 1;
 
@@ -161,11 +186,11 @@ int powerOfTen(int exp) {
     return result;
 }
 
-void ChangeDigits(int n, int m, int k)
+void changeDigits(int n, int m, int k)
 {
     int nOriginal = n;
     int mOriginal = m;
-    int counter = DigitsCounter(n);
+    int counter = digitsCounter(n);
 
     for(int i = k; i < counter; i++)
     {
@@ -195,7 +220,7 @@ void ChangeDigits(int n, int m, int k)
 
 
 // 8
-int Lcm(int first, int second)
+int lcm(int first, int second)
 {
     int result = first;
 
@@ -208,15 +233,28 @@ int Lcm(int first, int second)
 }
 
 // 9
-int Concat(unsigned int first, unsigned int second)
+int concat(unsigned int first, unsigned int second)
 {
-    int counterSecond = DigitsCounter(second);
+    int counterSecond = digitsCounter(second);
     int result = first * powerOfTen(counterSecond) + second;
 
     return result;
 }
 
 int main()
-{
+{   
+    // int i = 0;
+    // while(++i, ++i < 15){
+    //     do
+    //     {
+    //         std::cout << i * 2;
+    //     }
+    //     while(i++ < 6);
+    // }
+
+    int a, b;
+    std::cin >> a >> b;
+    std::cout << gcdEucledianAlgorithm(a, b);
+
     return 0;
 }
